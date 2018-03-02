@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col-md-8 order-md-1">
+		<h4 class="mb-3">Item Details</h4>
+		
+		<form autocomplete="off" action="#" th:action="@{/addItem}" th:object="${item}" method="post" class="form-horizontal" role="form">
+			<div class="form-group">
+				<div class="col-sm-9">
+					<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
+					<input type="text" th:field="*{name}" placeholder="Name" class="form-control" /> 
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-9">
+					<button type="submit" class="btn btn-primary btn-block">Add Item</button>
+				</div>
+			</div>
+			
+			<span th:utext="${successMessage}"></span>
+		</form>
+	</div>
+	<div class="col-md-4 order-md-2 mb-4">
+		<h4 class="d-flex justify-content-between align-items-center mb-3">
+        		<span class="text-muted">Shopping List</span>
+            <span class="badge badge-secondary badge-pill">0</span>
+    		</h4>
+    		<ul class="list-group mb-3">
+    			<li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let item of items">
+            		<div>
+                		<h6 class="my-0">{{item.name}}</h6>
+              	</div>
+              	<a href="javascript:void();" class="oi oi-circle-x text-danger deleteItem"></a>
+            </li>
+    		</ul>
+	</div>
+</div>
