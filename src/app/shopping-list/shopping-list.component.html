@@ -1,22 +1,62 @@
-<div class="row">
+<div class="app-content app-no-padding app-aside">
+	<app-add-item></app-add-item>
+	<div class="main-content container-fluid">
+		<div class="app-aside-header">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="app-aside-header-title">
+						Shopping Busket
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row app-shopping-items">
+			<div class="col-xl-6" *ngFor="let shop of shopsWithItems">
+				<div class="app-shopping-item">
+					<div class="app-shopping-item-desc">
+						<div class="row app-shopping-item-shop-title">
+							<div class="col-md-11">
+								<h4 class="">{{shop.name}}</h4>
+							</div>
+							<div class="col-md-1">
+								<a href="#" class="oi oi-loop-circular refresh"></a>
+							</div>
+						</div>
+						
+						<div *ngFor="let item of shop.items odd as isOdd; even as isEven"
+								class="app-shopping-item-list row"
+								[class.odd]="isOdd" 
+								[class.even]="isEven">
+							<div class="col-md-10">
+								<h6>{{item.name}}</h6>
+							</div>
+							<div class="col-md-2">
+								<a href="#" class="oi oi-task markDone"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+<!-- <div class="row">
 	<div class="col-md-8 order-md-1">
 		<h4 class="mb-3">Item Details</h4>
 		
-		<form autocomplete="off" action="#" th:action="@{/addItem}" th:object="${item}" method="post" class="form-horizontal" role="form">
-			<div class="form-group">
-				<div class="col-sm-9">
-					<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
-					<input type="text" th:field="*{name}" placeholder="Name" class="form-control" /> 
-				</div>
-			</div>
+		<form #shoppingItemForm="ngForm" class="col-md-5">
 			
-			<div class="form-group">
-				<div class="col-sm-9">
-					<button type="submit" class="btn btn-primary btn-block">Add Item</button>
-				</div>
-			</div>
+
 			
-			<span th:utext="${successMessage}"></span>
+			
+			
 		</form>
 	</div>
 	<div class="col-md-4 order-md-2 mb-4">
@@ -33,4 +73,4 @@
             </li>
     		</ul>
 	</div>
-</div>
+</div> -->

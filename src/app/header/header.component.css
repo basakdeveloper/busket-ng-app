@@ -1,0 +1,20 @@
+.app-top-header {
+    background-color: #FFF;
+    border: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #e6e5e5;
+    padding: 0;
+  }
+  
+  .app-top-header .app-navbar-header .navbar-brand {
+    line-height: 60px;
+    background-repeat: no-repeat;
+    background-position: 20px center;
+    padding: 0 5px;
+    margin: 0;
+    display: block;
+  }
+  
+  .app-top-header .app-navbar-header .navbar-brand img {
+    width: 150px;
+  }

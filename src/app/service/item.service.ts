@@ -11,4 +11,12 @@ export class ItemService {
     return this.httpClient.get(environment.apiUrl + '/api/items');
   }
 
+  getShops() {
+    return this.httpClient.get(environment.apiUrl + '/api/shops');
+  }
+
+  getShopsWithItems() {
+    return this.httpClient.get(environment.apiUrl + '/api/shopsWithItems');
+  }
+
 }
