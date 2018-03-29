@@ -343,3 +343,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, legend, main
 .refresh {
   color: #bababa;
 }
+
+.alert {
+  margin-top: 5px;
+}

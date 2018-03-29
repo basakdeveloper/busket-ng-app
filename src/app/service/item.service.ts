@@ -1,3 +1,4 @@
+import { Item } from './../model/item.model';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -17,6 +18,10 @@ export class ItemService {
 
   getShopsWithItems() {
     return this.httpClient.get(environment.apiUrl + '/api/shopsWithItems');
+  }
+
+  addItem(item: Item) {
+    return this.httpClient.post<Item>(environment.apiUrl + '/api/items/add', item);
   }
 
 }

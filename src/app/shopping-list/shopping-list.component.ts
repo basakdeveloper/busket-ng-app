@@ -25,7 +25,7 @@ export class ShoppingListComponent implements OnInit {
         this.items = data;
       },
       err => { console.error(err); },
-      () => { console.log('done loading'); }
+      () => {}
     );
   }
 
@@ -33,11 +33,14 @@ export class ShoppingListComponent implements OnInit {
     this.itemService.getShopsWithItems().subscribe(
       data => {
         this.shopsWithItems = data;
-        console.log(data);
       },
       err => { console.error(err); },
-      () => { console.log('done loading'); }
+      () => {}
     );
+  }
+
+  reloadItems(event) {
+    this.getShopsWithItems();
   }
 
 }

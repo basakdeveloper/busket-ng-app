@@ -1,5 +1,5 @@
 <div class="app-content app-no-padding app-aside">
-	<app-add-item></app-add-item>
+	<app-add-item (addItemEvent)="reloadItems($event)"></app-add-item>
 	<div class="main-content container-fluid">
 		<div class="app-aside-header">
 			<div class="row">

@@ -1,6 +1,7 @@
 import { ItemService } from './../../service/item.service';
 import { Item } from './../../model/item.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Shop } from '../../model/shop.model';
 
 @Component({
   selector: 'app-add-item',
@@ -9,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddItemComponent implements OnInit {
 
-  public newItem = new Item(0, '', 0);
+  public newItem = new Item(0, '', new Shop(0, '', []));
 
   public shops;
+
+  @Output()
+  addItemEvent = new EventEmitter<string>();
 
   constructor(private itemService: ItemService) { }
 
@@ -25,8 +29,19 @@ export class AddItemComponent implements OnInit {
         this.shops = data;
       },
       err => { console.error(err); },
-      () => { console.log('done loading'); }
+      () => {}
     );
+  }
+
+  addItem(addItemForm) {
+    this.itemService.addItem(this.newItem).subscribe(
+      data => {
+        this.addItemEvent.emit('done');
+      },
+      err => { console.error(err); },
+      () => {}
+    );
+    addItemForm.reset();
   }
 
 }
