@@ -1,0 +1,97 @@
+<aside class="page-aside">
+	<div class="app-scroller ps-container ps-theme-default ps-active-y">
+		<div class="aside-content">
+			<div class="content">
+				<div class="aside-header">
+					<span class="title">Add Expense</span>
+				</div>
+			</div>
+			<div class="aside-nav collapse">
+				<form (ngSubmit)="addExpense(addExpenseForm);" #addExpenseForm="ngForm">
+					<div class="content">
+						<div class="form-group">
+							<label for="description">Expense Description</label>
+							<input type="text" class="form-control" id="description" name="description"
+									[(ngModel)] = newExpense.description #description="ngModel"
+									placeholder="Expense Description"
+									required minlength="2"
+									/>
+							
+							<div *ngIf="description.invalid && (description.dirty || description.touched)"
+									class="alert alert-danger">
+								<div *ngIf="description.errors.required">
+									Description is required.
+								</div>
+								<div *ngIf="description.errors.minlength">
+									Description must be at least 2 characters long.
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="date">Expense Date</label>
+							<div class="input-group">
+								<input type="text" class="form-control" id="date" name="date"
+										ngbDatepicker #date="ngbDatepicker"
+										[(ngModel)] = newExpense.date
+										placeholder="dd-mm-yyyy"
+										required  />
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" (click)="date.toggle()" type="button">
+										<i class="oi oi-calendar"></i>
+									</button>
+								</div>
+
+								<div *ngIf="date.invalid && (date.dirty || date.touched)"
+										class="alert alert-danger">
+									<div *ngIf="date.errors.required">
+										Date is required.
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="account">Account</label>
+							<select class="form-control" id="account"
+									required
+									name="account"
+									[(ngModel)] = newExpense.expenseAccount.id #account="ngModel"
+									>
+								<option *ngFor="let account of accounts;" [value]="account.id">{{account.name}}</option>
+							</select>
+
+							<div *ngIf="account.invalid && (account.dirty || account.touched)"
+									class="alert alert-danger">
+								Select an Account
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="account">Expense Category</label>
+							<div class="form-control">
+								<tree-root [nodes]="nodes" [options]="options" (activate)="selectTreeNode()" #tree></tree-root>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="amount">Expense Amount</label>
+							<input type="number" class="form-control" id="amount" name="amount"
+									step='0.01' placeholder='0.00'
+									[(ngModel)] = newExpense.amount #amount="ngModel"
+									required
+									/>
+
+							<div *ngIf="amount.invalid && (amount.dirty || amount.touched)"
+									class="alert alert-danger">
+								<div *ngIf="amount.errors.required">
+									Amount is required.
+								</div>
+							</div>
+						</div>
+						<div class="form-group mb-3">
+							<button type="submit" class="btn btn-primary btn-block"
+									[disabled]="!addExpenseForm.form.valid">Add Expense</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</aside>
