@@ -17,6 +17,7 @@ import { ExpenseTrackerComponent } from './expense-tracker/expense-tracker.compo
 import { AddExpenseComponent } from './expense-tracker/add-expense/add-expense.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeModule } from 'angular-tree-component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { TreeModule } from 'angular-tree-component';
     AppRoutingModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
-    TreeModule
+    TreeModule,
+    DataTablesModule
   ],
   providers: [ItemService, ExpenseService],
   bootstrap: [AppComponent]
