@@ -21,4 +21,8 @@ export class ExpenseService {
     addExpense(expense: Expense) {
         return this.httpClient.post<Expense>(environment.apiUrl + '/api/expense/add', expense);
     }
+
+    getExpenses() {
+        return this.httpClient.get<Expense[]>(environment.apiUrl + '/api/expenses');
+    }
 }

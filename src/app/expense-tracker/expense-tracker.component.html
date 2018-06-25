@@ -5,13 +5,42 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="app-aside-header-title">
-						Shopping Busket
+						Expense Tracker
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row app-shopping-items">
-			
+			<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+				<ng-container matColumnDef="date">
+					<th mat-header-cell *matHeaderCellDef> Description </th>
+					<td mat-cell *matCellDef="let element"> {{element.date}} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="description">
+					<th mat-header-cell *matHeaderCellDef> Description </th>
+					<td mat-cell *matCellDef="let element"> {{element.description}} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="expenseCategory">
+					<th mat-header-cell *matHeaderCellDef> Category </th>
+					<td mat-cell *matCellDef="let element"> {{element.expenseCategory.categoryName}} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="expenseSubCategory">
+					<th mat-header-cell *matHeaderCellDef> Sub-Category </th>
+					<td mat-cell *matCellDef="let element"> {{element.expenseCategory.subCategoryName}} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="expenseAccount">
+					<th mat-header-cell *matHeaderCellDef> Account </th>
+					<td mat-cell *matCellDef="let element"> {{element.expenseAccount.name}} </td>
+				</ng-container>
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
 		</div>
 	</div>
 </div>
