@@ -1,6 +1,6 @@
 import { Expense } from './../../model/expense.model';
 import { ExpenseCategory } from './../../model/expense-category.model';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ExpenseService } from '../../service/expense.service';
 import { TreeNode, TreeComponent, TreeModel } from 'angular-tree-component';
@@ -26,6 +26,9 @@ export class AddExpenseComponent implements OnInit {
 
   @ViewChild('tree') treeComponent: TreeComponent;
   treeModel: TreeModel;
+
+  @Output()
+  addExpenseEvent = new EventEmitter<string>();
 
   constructor(private expenseService: ExpenseService) { }
 
@@ -97,6 +100,7 @@ export class AddExpenseComponent implements OnInit {
     this.expenseService.addExpense(this.newExpense).subscribe(
       data => {
         // addExpenseForm.reset();
+        this.addExpenseEvent.emit('done');
       },
       err => { console.error(err); },
       () => {}

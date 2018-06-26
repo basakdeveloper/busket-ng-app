@@ -1,5 +1,5 @@
 <div class="app-content app-no-padding app-aside">
-	<app-add-expense></app-add-expense>
+	<app-add-expense (addExpenseEvent)="reloadExpenses($event)"></app-add-expense>
 	<div class="main-content container-fluid">
 		<div class="app-aside-header">
 			<div class="row">
