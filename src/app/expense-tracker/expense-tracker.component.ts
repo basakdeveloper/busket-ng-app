@@ -3,7 +3,7 @@ import { ExpenseService } from './../service/expense.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ExpenseAccount } from '../model/expense-account.model';
 import { ExpenseCategory } from '../model/expense-category.model';
-import { MatTable } from '@angular/material';
+import { MatTable, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-expense-tracker',
@@ -11,8 +11,11 @@ import { MatTable } from '@angular/material';
   styleUrls: ['./expense-tracker.component.css']
 })
 export class ExpenseTrackerComponent implements OnInit {
-  displayedColumns = ['date', 'description', 'expenseCategory', 'expenseSubCategory', 'expenseAccount'];
-  dataSource: Expense[];
+  displayedColumns = ['date', 'expenseCategory', 'expenseSubCategory', 'expenseAccount', 'description', 'amount'];
+  dataSource: MatTableDataSource<Expense>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private expenseService: ExpenseService) { }
 
@@ -27,7 +30,11 @@ export class ExpenseTrackerComponent implements OnInit {
   getExpenses() {
     this.expenseService.getExpenses().subscribe(
       data => {
-        this.dataSource = data;
+        console.log(data);
+        this.dataSource = new MatTableDataSource(data);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
     );
   }

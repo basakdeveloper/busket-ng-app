@@ -277,6 +277,10 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, legend, main
   padding: 26px;
 }
 
+.app-expenses {
+  padding: 26px;
+}
+
 .row {
   display: -ms-flexbox;
   display: flex;

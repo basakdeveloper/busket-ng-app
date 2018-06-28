@@ -15,7 +15,7 @@ import { AddItemComponent } from './shopping-list/add-item/add-item.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { ExpenseTrackerComponent } from './expense-tracker/expense-tracker.component';
 import { AddExpenseComponent } from './expense-tracker/add-expense/add-expense.component';
-import { MatTableModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import { MatTableModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { MatButtonModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -46,6 +46,8 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatPaginatorModule,
+    MatSortModule,
     FlashMessagesModule.forRoot()
   ],
   providers: [ItemService, ExpenseService],
