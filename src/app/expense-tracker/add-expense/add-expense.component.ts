@@ -1,11 +1,10 @@
 import { Expense } from './../../model/expense.model';
 import { ExpenseCategory } from './../../model/expense-category.model';
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { ExpenseService } from '../../service/expense.service';
-import { TreeNode, TreeComponent, TreeModel } from 'angular-tree-component';
 import { ExpenseAccount } from '../../model/expense-account.model';
-import { ITreeNode } from 'angular-tree-component/dist/defs/api';
+import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-add-expense',
@@ -14,27 +13,31 @@ import { ITreeNode } from 'angular-tree-component/dist/defs/api';
 })
 export class AddExpenseComponent implements OnInit {
 
-  public newExpense = new Expense(0, '', 0, new Date(),
-                              new ExpenseAccount(0, ''),
-                              new ExpenseCategory(0, '', ''));
+  addExpenseForm: FormGroup;
 
   public accounts;
   public expenseCategories;
-
-  public nodes = [];
-  options = {};
-
-  @ViewChild('tree') treeComponent: TreeComponent;
-  treeModel: TreeModel;
+  public expenseCategoriesArr = new Array();
+  public expenseCategoriesMap: { [index: string ]: {} } = {};
 
   @Output()
   addExpenseEvent = new EventEmitter<string>();
 
-  constructor(private expenseService: ExpenseService) { }
+  constructor(private expenseService: ExpenseService, private fb: FormBuilder, private flashMessage: FlashMessagesService) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.addExpenseForm = this.fb.group({
+      description: ['', Validators.required],
+      date: ['', Validators.required],
+      category: ['', Validators.required],
+      account: ['', Validators.required],
+      amount: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
-
-    this.treeModel = this.treeComponent.treeModel;
 
     this.expenseService.getAccounts()
       .subscribe(
@@ -50,32 +53,23 @@ export class AddExpenseComponent implements OnInit {
         data => {
           this.expenseCategories = data;
 
-          const expenseCategoriesMap: { [index: string ]: {} } = {};
           for (const expenseCategory of this.expenseCategories) {
-            if (!(expenseCategory.categoryName in expenseCategoriesMap)) {
-              expenseCategoriesMap[expenseCategory.categoryName] = {
+            if (!(expenseCategory.categoryName in this.expenseCategoriesMap)) {
+              this.expenseCategoriesMap[expenseCategory.categoryName] = {
                 name: expenseCategory.categoryName,
                 type: 'Category',
                 children: []
               };
+
+              this.expenseCategoriesArr.push(expenseCategory.categoryName);
             }
 
-            expenseCategoriesMap[expenseCategory.categoryName]['children'].push({
+            this.expenseCategoriesMap[expenseCategory.categoryName]['children'].push({
               id: expenseCategory.id,
               type: 'Sub-Category',
               name: expenseCategory.subCategoryName
             });
           }
-
-          Object.keys(expenseCategoriesMap).forEach(key => {
-            this.nodes.push(expenseCategoriesMap[key]);
-          });
-
-          this.options = {
-            getChildren: (node: TreeNode) => {
-              return this.nodes;
-            }
-          };
         },
         err => { console.error(err); },
         () => {}
@@ -83,23 +77,19 @@ export class AddExpenseComponent implements OnInit {
 
   }
 
-  selectTreeNode() {
-    if (this.treeModel.focusedNode.data.type === 'Sub-Category') {
-      console.log(this.treeModel.focusedNode.data.id);
-      this.newExpense.expenseCategory.id = this.treeModel.focusedNode.data.id;
-    }
-  }
+  addExpense(formDirective: FormGroupDirective) {
+    const expenseFormModel = this.addExpenseForm.value;
+    const newExpense = new Expense(0, expenseFormModel.description as string,
+                                    expenseFormModel.amount as number,
+                                    expenseFormModel.date as Date,
+                                    new ExpenseAccount(expenseFormModel.account as number, ''),
+                                    new ExpenseCategory(expenseFormModel.category as number, '', ''));
 
-  addExpense(addExpenseForm) {
-    const date1 = new Date();
-    date1.setDate(this.newExpense.date['day']);
-    date1.setMonth(this.newExpense.date['month'] - 1);
-    date1.setFullYear(this.newExpense.date['year']);
-    this.newExpense.date = date1;
-
-    this.expenseService.addExpense(this.newExpense).subscribe(
+    this.expenseService.addExpense(newExpense).subscribe(
       data => {
-        // addExpenseForm.reset();
+        this.flashMessage.show('New Expense has been Added!', { cssClass: 'alert-success', timeout: 5000 });
+        formDirective.resetForm();
+        this.addExpenseForm.reset();
         this.addExpenseEvent.emit('done');
       },
       err => { console.error(err); },

@@ -15,9 +15,10 @@ import { AddItemComponent } from './shopping-list/add-item/add-item.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { ExpenseTrackerComponent } from './expense-tracker/expense-tracker.component';
 import { AddExpenseComponent } from './expense-tracker/add-expense/add-expense.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TreeModule } from 'angular-tree-component';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 
 @NgModule({
@@ -37,9 +38,15 @@ import { MatTableModule } from '@angular/material';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgbModule.forRoot(),
-    TreeModule,
-    MatTableModule
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FlashMessagesModule.forRoot()
   ],
   providers: [ItemService, ExpenseService],
   bootstrap: [AppComponent]
